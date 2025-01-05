@@ -1,4 +1,4 @@
-import IdeaCard from '@/components/IdeaCard';
+import IdeaCard, {TIdeaCard} from '@/components/IdeaCard';
 import SearchForm from '@/components/SearchForm';
 import {client} from '@/sanity/lib/client';
 import {IDEA_QUERY} from '@/sanity/lib/queries';
@@ -23,7 +23,7 @@ export default async function Home({searchParams}: {searchParams: Promise<{query
         <p className='text-30-semibold'>{query ? `Search results for "${query}"` : 'Latest Ideas'}</p>
         <ul className='mt-7 card_grid'>
           {posts?.length > 0 ? (
-            posts.map((post, index) => <IdeaCard key={post._id} post={post} />)
+            posts.map((post: TIdeaCard, index: number) => <IdeaCard key={post._id} post={post} />)
           ) : (
             <p className='no-results'>No posts found</p>
           )}

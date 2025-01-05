@@ -27,6 +27,10 @@ export const idea = defineType({
       type: 'number',
     }),
     defineField({
+      name: 'description',
+      type: 'text',
+    }),
+    defineField({
       name: 'category',
       type: 'string',
       validation: (Rule) => Rule.min(1).max(20).required().error('Category is required'),
