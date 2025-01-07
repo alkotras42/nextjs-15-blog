@@ -1,6 +1,7 @@
-import { defineQuery } from 'next-sanity';
+import {defineQuery} from 'next-sanity';
 
-export const IDEA_QUERY = defineQuery(`*[_type == "idea" && defined(slug.current)] | order(publishedAt desc) {
+export const IDEA_QUERY =
+  defineQuery(`*[_type == "idea" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(publishedAt desc) {
   _id,
   _createdAt,
   title,
