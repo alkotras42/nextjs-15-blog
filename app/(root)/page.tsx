@@ -1,12 +1,12 @@
 import IdeaCard, {TIdeaCard} from '@/components/IdeaCard';
 import SearchForm from '@/components/SearchForm';
-import {client} from '@/sanity/lib/client';
+import {sanityFetch, SanityLive} from '@/sanity/lib/live';
 import {IDEA_QUERY} from '@/sanity/lib/queries';
 
 export default async function Home({searchParams}: {searchParams: Promise<{query?: string}>}) {
   const query = (await searchParams).query;
 
-  const posts = await client.fetch(IDEA_QUERY);
+  const {data: posts} = await sanityFetch({query: IDEA_QUERY});
 
   return (
     <>
@@ -29,6 +29,7 @@ export default async function Home({searchParams}: {searchParams: Promise<{query
           )}
         </ul>
       </section>
+      <SanityLive />
     </>
   );
 }
