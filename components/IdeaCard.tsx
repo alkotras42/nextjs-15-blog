@@ -23,7 +23,7 @@ const IdeaCard = ({post}: {post: TIdeaCard}) => {
           <Link href={`/user/${post.author?._id}`}>
             <p className='text-16-demium line-clamp-1'>{post.author?.name}</p>
           </Link>
-          <Link href={`/startup/${post._id}`}>
+          <Link href={`/idea/${post._id}`}>
             <h3 className='text-26-semibold'>{post.title}</h3>
           </Link>
         </div>
@@ -31,7 +31,7 @@ const IdeaCard = ({post}: {post: TIdeaCard}) => {
           <Image src='https://placehold.co/48x48' alt='placeholder' width={48} height={48} className='rounded-full' />
         </Link>
       </div>
-      <Link href={`/startup/${post._id}`}>
+      <Link href={`/idea/${post._id}`}>
         <p className='startup-card_desc'>{post.description}</p>
         <img src={post.image} alt='image' className='startup-card_img' />
       </Link>
@@ -40,7 +40,7 @@ const IdeaCard = ({post}: {post: TIdeaCard}) => {
           <p className='text-16-medium'>{post.category}</p>
         </Link>
         <Button className='startup-card_btn' asChild>
-          <Link href={`/startup/${post._id}`}>Details</Link>
+          <Link href={`/idea/${post._id}`}>Details</Link>
         </Button>
       </div>
     </li>

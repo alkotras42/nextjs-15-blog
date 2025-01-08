@@ -7,12 +7,37 @@ export const IDEA_QUERY =
   title,
   slug,
   author->{
+  _id,
     name,
     username,
     image
   },
   views,
+  description,
+  category,
+  image,
+}`);
+
+export const IDEA_BY_ID_QUERY = defineQuery(`*[_type == "idea" && _id == $id][0]{
+  _id,
+  _createdAt,
+  title,
+  slug,
+  author->{
+    _id,
+    name,
+    username,
+    image,
+    bio,
+  },
+  views,
+  description,
   category,
   image,
   pitch,
+}`);
+
+export const IDEA_VIEWS_QUERY = defineQuery(`*[_type == "idea" && _id == $id][0]{
+  _id,
+  views
 }`);
