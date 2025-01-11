@@ -12,6 +12,7 @@ const formatViews = (views: number): string => {
 const View = async ({id}: {id: string}) => {
   const {views} = await client.withConfig({useCdn: false}).fetch(IDEA_VIEWS_QUERY, {id});
 
+  // Increments the view count for the idea with the specified `id` by 1 and commits the change to the Sanity database.
   after(
     async () =>
       await writeClient
