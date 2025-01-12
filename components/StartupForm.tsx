@@ -1,21 +1,53 @@
 'use client';
 
-import React from 'react';
+import React, {useActionState} from 'react';
 import {Input} from './ui/input';
 import {Textarea} from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
 import {Button} from './ui/button';
 import {Send} from 'lucide-react';
+import {formSchema} from '@/lib/validation';
+import {z} from 'zod';
 
 const StartupForm = () => {
   const [errors, setErrors] = React.useState<Record<string, string>>({});
 
   const [pitch, setPitch] = React.useState<string>('');
 
-  const isPending = false;
+  const handleFormSubmit = async (prevState: any, formData: FormData) => {
+    try {
+      const formValues = {
+        title: formData.get('title') as string,
+        description: formData.get('description') as string,
+        category: formData.get('category') as string,
+        link: formData.get('link') as string,
+        pitch,
+      };
+
+      await formSchema.parseAsync(formValues);
+
+      console.log(formValues);
+
+      //const result = await createIdea(prevState, formData, pitch);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const errors = error.flatten().fieldErrors;
+
+        setErrors(errors as unknown as Record<string, string>);
+
+        return {...prevState, error: 'Validation Error', status: 'error'};
+      }
+      return {...prevState, error: 'Something went wrong', status: 'error'};
+    }
+  };
+
+  const [state, formAction, isPending] = useActionState(handleFormSubmit, {
+    error: '',
+    status: 'initial',
+  });
 
   return (
-    <form action={() => {}} className='startup-form'>
+    <form action={formAction} className='startup-form'>
       <div>
         <label htmlFor='title' className='startup-form_label'>
           Title
@@ -83,8 +115,8 @@ const StartupForm = () => {
         />
         {errors.pitch && <p className='startup-form_error'>{errors.pitch}</p>}
       </div>
-      <Button disabled={isPending} type='submit' className='startup-form_btn text-white'>
-        {isPending ? 'Submitting...' : 'Submit your idea'}
+      <Button type='submit' className='startup-form_btn text-white' disabled={isPending}>
+        {isPending ? 'Submitting...' : 'Submit Your Idea'}
         <Send className='size-6 ml-2' />
       </Button>
     </form>
